@@ -118,10 +118,12 @@ const Transactions = ({ transactions, setTransactions }) => {
   }
 
   const transactionsData =
-    data?.me.transactions.map((transaction) => ({
-      ...transaction,
-      date: moment.unix(transaction.date / 1000).format("MM/DD/YYYY"),
-    })) || [];
+  data?.me.transactions.map((transaction) => ({
+    ...transaction,
+    date: transaction.date // Assuming the server sends a timestamp
+      ? moment.unix(transaction.date / 1000).format("MM/DD/YYYY")
+      : transaction.date, // If the server already sends a formatted string, use it as is
+  })) || [];
 
   const currentDate = moment().format("L");
   const currentMonth = moment().format("M");
